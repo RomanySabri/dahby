@@ -1065,6 +1065,80 @@
       font-size: 11px;
       font-weight: 800;
     }
+
+    /* ===== Exercise Search Dropdown ===== */
+    .ex-search-wrap {
+      position: relative;
+    }
+
+    .ex-dropdown {
+      display: none;
+      position: absolute;
+      top: calc(100% + 4px);
+      right: 0;
+      left: 0;
+      background: #1a1a1a;
+      border: 1px solid var(--gold-primary);
+      border-radius: 10px;
+      z-index: 999;
+      max-height: 260px;
+      overflow-y: auto;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.6), 0 0 20px rgba(212,175,55,0.15);
+    }
+
+    .dd-item {
+      padding: 10px 14px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-bottom: 1px solid rgba(212,175,55,0.08);
+      transition: background 0.15s;
+    }
+
+    .dd-item:last-child { border-bottom: none; }
+
+    .dd-item:hover {
+      background: rgba(212,175,55,0.1);
+    }
+
+    .dd-ar {
+      font-size: 14px;
+      font-weight: 700;
+      color: #ffffff;
+      flex: 1;
+    }
+
+    .dd-en {
+      font-size: 11px;
+      color: var(--gold-primary);
+      direction: ltr;
+      text-align: left;
+      flex: 1;
+    }
+
+    .dd-group {
+      font-size: 10px;
+      color: #555;
+      white-space: nowrap;
+      background: rgba(212,175,55,0.07);
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+
+    .search-hint {
+      font-size: 10px;
+      color: #555;
+      margin-top: 3px;
+      text-align: right;
+    }
+
+    @keyframes bump {
+      0%   { transform: scale(1); }
+      40%  { transform: scale(1.35); color: #f3d060; }
+      100% { transform: scale(1); }
+    }
+    .bump { animation: bump 0.4s ease; }
   </style>
 </head>
 
@@ -1115,9 +1189,469 @@
 
     const e = s => (s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
     const L = s => (s || '').split('\n').filter(Boolean);
+
+    // ===== قاعدة بيانات التمارين (Ahmed Dahpi Master Library) =====
+    const EXERCISES_DB = [
+      // الصدر - CHEST
+      { ar: 'بنش برس بار مسطح', en: 'Barbell Flat Bench Press', group: 'الصدر' },
+      { ar: 'بنش برس دمبل مسطح', en: 'Dumbbell Flat Bench Press', group: 'الصدر' },
+      { ar: 'بنش برس مائل بار', en: 'Incline Barbell Bench Press', group: 'الصدر' },
+      { ar: 'بنش برس مائل دمبل', en: 'Incline Dumbbell Bench Press', group: 'الصدر' },
+      { ar: 'بنش برس هابط', en: 'Decline Bench Press', group: 'الصدر' },
+      { ar: 'سميث مشين بنش', en: 'Smith Machine Bench Press', group: 'الصدر' },
+      { ar: 'تفتيح دمبل مسطح', en: 'Flat Dumbbell Fly', group: 'الصدر' },
+      { ar: 'تفتيح دمبل مائل', en: 'Incline Dumbbell Fly', group: 'الصدر' },
+      { ar: 'كابل كروس أوفر', en: 'Cable Crossover', group: 'الصدر' },
+      { ar: 'بيك دك ماشين', en: 'Pec Deck Machine', group: 'الصدر' },
+      { ar: 'ديبس للصدر', en: 'Chest Dips', group: 'الصدر' },
+      { ar: 'بوش أب', en: 'Push-up', group: 'الصدر' },
+      // الظهر - BACK
+      { ar: 'عقلة قبضة واسعة', en: 'Wide-Grip Pull-up', group: 'الظهر' },
+      { ar: 'عقلة قبضة عكسية', en: 'Chin-up', group: 'الظهر' },
+      { ar: 'سحب أمامي بار', en: 'Lat Pulldown', group: 'الظهر' },
+      { ar: 'تجديف بار منحني', en: 'Barbell Bent-Over Row', group: 'الظهر' },
+      { ar: 'تجديف دمبل بذراع واحدة', en: 'Single-Arm Dumbbell Row', group: 'الظهر' },
+      { ar: 'تجديف تي بار', en: 'T-Bar Row', group: 'الظهر' },
+      { ar: 'تجديف كابل جالس', en: 'Seated Cable Row', group: 'الظهر' },
+      { ar: 'ديدليفت', en: 'Deadlift', group: 'الظهر' },
+      { ar: 'ديدليفت روماني', en: 'Romanian Deadlift', group: 'الظهر' },
+      { ar: 'هايبر إكستنشن', en: 'Hyperextension (Back Extension)', group: 'الظهر' },
+      { ar: 'بول أوفر', en: 'Pullover', group: 'الظهر' },
+      { ar: 'فيس بول', en: 'Face Pull', group: 'الظهر' },
+      // الأكتاف - SHOULDERS
+      { ar: 'بريس عسكري بار', en: 'Military (Overhead) Barbell Press', group: 'الأكتاف' },
+      { ar: 'بريس دمبل واقف أو جالس', en: 'Dumbbell Shoulder Press', group: 'الأكتاف' },
+      { ar: 'أرنولد برس', en: 'Arnold Press', group: 'الأكتاف' },
+      { ar: 'رفرفة جانبية دمبل', en: 'Lateral Raise', group: 'الأكتاف' },
+      { ar: 'رفرفة أمامية دمبل', en: 'Front Raise', group: 'الأكتاف' },
+      { ar: 'رفرفة خلفية بينت أوفر', en: 'Bent-Over Rear Delt Raise', group: 'الأكتاف' },
+      { ar: 'ريفرس بيك دك', en: 'Reverse Pec Deck', group: 'الأكتاف' },
+      { ar: 'أب رايت رو', en: 'Upright Row', group: 'الأكتاف' },
+      { ar: 'أراوند ذا وورلد', en: 'Around the World', group: 'الأكتاف' },
+      { ar: 'شراج بار أو دمبل', en: 'Barbell/Dumbbell Shrug', group: 'الأكتاف' },
+      // الترايسبس - TRICEPS
+      { ar: 'تركيب حبل كابل', en: 'Cable Tricep Pushdown (Rope)', group: 'الترايسبس' },
+      { ar: 'بار مستقيم كابل', en: 'Cable Pushdown (Straight Bar)', group: 'الترايسبس' },
+      { ar: 'سكال كراشر', en: 'Skull Crusher (Lying Extension)', group: 'الترايسبس' },
+      { ar: 'ديبس ترايسبس', en: 'Tricep Dips', group: 'الترايسبس' },
+      { ar: 'كلوز جريب بنش', en: 'Close-Grip Bench Press', group: 'الترايسبس' },
+      { ar: 'إكستنشن دمبل فوق الراس', en: 'Overhead Dumbbell Extension', group: 'الترايسبس' },
+      { ar: 'كيك باك دمبل', en: 'Tricep Kickback', group: 'الترايسبس' },
+      // البايسبس - BICEPS
+      { ar: 'كيرل بار', en: 'Barbell Curl', group: 'البايسبس' },
+      { ar: 'كيرل دمبل بديل', en: 'Alternating Dumbbell Curl', group: 'البايسبس' },
+      { ar: 'كيرل هامر', en: 'Hammer Curl', group: 'البايسبس' },
+      { ar: 'كيرل تركيز', en: 'Concentration Curl', group: 'البايسبس' },
+      { ar: 'كيرل كابل', en: 'Cable Curl', group: 'البايسبس' },
+      { ar: 'كيرل سكوت بريتشر', en: 'Preacher Curl', group: 'البايسبس' },
+      { ar: 'كيرل إيز بار', en: 'EZ-Bar Curl', group: 'البايسبس' },
+      { ar: 'كيرل 21', en: '21s Curl', group: 'البايسبس' },
+      // الساعد - FOREARMS
+      { ar: 'ريست كيرل', en: 'Wrist Curl', group: 'الساعد' },
+      { ar: 'ريفرس ريست كيرل', en: 'Reverse Wrist Curl', group: 'الساعد' },
+      { ar: 'ريفرس كيرل بار', en: 'Reverse Barbell Curl', group: 'الساعد' },
+      { ar: 'فارمر ووك', en: "Farmer's Walk", group: 'الساعد' },
+      // الكوادز - QUADS
+      { ar: 'سكوات بار حر', en: 'Barbell Back Squat', group: 'الأرجل - كوادز' },
+      { ar: 'سكوات أمامي', en: 'Front Squat', group: 'الأرجل - كوادز' },
+      { ar: 'ليج برس', en: 'Leg Press', group: 'الأرجل - كوادز' },
+      { ar: 'ليج إكستنشن', en: 'Leg Extension', group: 'الأرجل - كوادز' },
+      { ar: 'لانج دمبل أو بار', en: 'Lunges', group: 'الأرجل - كوادز' },
+      { ar: 'بلغاريان سبليت سكوات', en: 'Bulgarian Split Squat', group: 'الأرجل - كوادز' },
+      { ar: 'هاك سكوات', en: 'Hack Squat', group: 'الأرجل - كوادز' },
+      { ar: 'سكوات جوبلت', en: 'Goblet Squat', group: 'الأرجل - كوادز' },
+      { ar: 'بيستول سكوات', en: 'Pistol Squat', group: 'الأرجل - كوادز' },
+      // الهامسترينج والجلوتس - HAMSTRINGS & GLUTES
+      { ar: 'ليج كيرل جالس أو مستلقي', en: 'Leg Curl (Seated/Lying)', group: 'الهامسترينج والجلوتس' },
+      { ar: 'ستيف ليج ديدليفت', en: 'Stiff-Leg Deadlift', group: 'الهامسترينج والجلوتس' },
+      { ar: 'هيب ثراست', en: 'Hip Thrust', group: 'الهامسترينج والجلوتس' },
+      { ar: 'جلوت بريدج', en: 'Glute Bridge', group: 'الهامسترينج والجلوتس' },
+      { ar: 'كيك باك كابل للجلوت', en: 'Cable Glute Kickback', group: 'الهامسترينج والجلوتس' },
+      { ar: 'جود مورنينج', en: 'Good Morning', group: 'الهامسترينج والجلوتس' },
+      { ar: 'سينجل ليج ديدليفت', en: 'Single-Leg Deadlift', group: 'الهامسترينج والجلوتس' },
+      // السمانة - CALVES
+      { ar: 'كالف رايز واقف', en: 'Standing Calf Raise', group: 'السمانة' },
+      { ar: 'كالف رايز جالس', en: 'Seated Calf Raise', group: 'السمانة' },
+      { ar: 'كالف رايز على ليج برس', en: 'Leg Press Calf Raise', group: 'السمانة' },
+      { ar: 'دونكي كالف رايز', en: 'Donkey Calf Raise', group: 'السمانة' },
+      // البطن والكور - ABS & CORE
+      { ar: 'كرانش', en: 'Crunch', group: 'البطن والكور' },
+      { ar: 'ليج رايز معلق', en: 'Hanging Leg Raise', group: 'البطن والكور' },
+      { ar: 'بلانك', en: 'Plank', group: 'البطن والكور' },
+      { ar: 'سايد بلانك', en: 'Side Plank', group: 'البطن والكور' },
+      { ar: 'كابل كرانش', en: 'Cable Crunch', group: 'البطن والكور' },
+      { ar: 'راشن تويست', en: 'Russian Twist', group: 'البطن والكور' },
+      { ar: 'في أب', en: 'V-Up', group: 'البطن والكور' },
+      { ar: 'أب ويل رول أوت', en: 'Ab Wheel Rollout', group: 'البطن والكور' },
+      { ar: 'بايسيكل كرانش', en: 'Bicycle Crunch', group: 'البطن والكور' },
+      { ar: 'كابل وود تشوب', en: 'Cable Woodchop', group: 'البطن والكور' },
+      { ar: 'بيرد دوج', en: 'Bird Dog', group: 'البطن والكور' },
+      // الرقبة - NECK
+      { ar: 'نيك فليكشن يدوي', en: 'Manual Neck Flexion', group: 'الرقبة' },
+      { ar: 'نيك إكستنشن يدوي', en: 'Manual Neck Extension', group: 'الرقبة' },
+      { ar: 'نيك هارنس', en: 'Neck Harness Exercise', group: 'الرقبة' },
+      { ar: 'ليتيرال نيك فليكس', en: 'Lateral Neck Flexion', group: 'الرقبة' },
+      // أوليمبيك - OLYMPIC
+      { ar: 'كلين اند جيرك', en: 'Clean and Jerk', group: 'أوليمبيك' },
+      { ar: 'سناتش', en: 'Snatch', group: 'أوليمبيك' },
+      { ar: 'باور كلين', en: 'Power Clean', group: 'أوليمبيك' },
+      { ar: 'هاي بول', en: 'High Pull', group: 'أوليمبيك' },
+      { ar: 'بوكس سكوات', en: 'Box Squat', group: 'أوليمبيك' },
+      // انفجاري - PLYOMETRIC
+      { ar: 'بوكس جامب', en: 'Box Jump', group: 'انفجاري' },
+      { ar: 'جامب سكوات', en: 'Jump Squat', group: 'انفجاري' },
+      { ar: 'بيربي', en: 'Burpee', group: 'انفجاري' },
+      { ar: 'كلاب بوش أب', en: 'Clap Push-up', group: 'انفجاري' },
+      { ar: 'برود جامب', en: 'Broad Jump', group: 'انفجاري' },
+      { ar: 'ميديسن بول سلام', en: 'Medicine Ball Slam', group: 'انفجاري' },
+      { ar: 'سكوات جامب', en: 'Squat Jump', group: 'انفجاري' },
+      // وظيفي - FUNCTIONAL
+      { ar: 'كيتل بيل سوينج', en: 'Kettlebell Swing', group: 'وظيفي' },
+      { ar: 'باتل روبس', en: 'Battle Ropes', group: 'وظيفي' },
+      { ar: 'تاير فليب', en: 'Tire Flip', group: 'وظيفي' },
+      { ar: 'سليد بوش أو بول', en: 'Sled Push/Pull', group: 'وظيفي' },
+      { ar: 'سليدج هامر سوينج', en: 'Sledgehammer Swings', group: 'وظيفي' },
+      { ar: 'تي آر إكس رو أو بريس', en: 'TRX Row/Press', group: 'وظيفي' },
+      { ar: 'ماونتن كلايمر', en: 'Mountain Climber', group: 'وظيفي' },
+      { ar: 'إنفرتد رو', en: 'Inverted Row', group: 'وظيفي' },
+      { ar: 'هاندستاند بوش أب', en: 'Handstand Push-up', group: 'وظيفي' },
+      // اتزان - STABILITY
+      { ar: 'بوسو بول سكوات', en: 'Bosu Ball Squat', group: 'اتزان' },
+      { ar: 'سينجل ليج بلانك', en: 'Single-Leg Plank', group: 'اتزان' },
+      { ar: 'كابل سكوات', en: 'Cable Squat', group: 'اتزان' },
+      { ar: 'كابل لاترال رايز', en: 'Cable Lateral Raise', group: 'اتزان' },
+      { ar: 'كابل بول ثرو', en: 'Cable Pull-Through', group: 'اتزان' },
+      { ar: 'سميث ماشين لانج', en: 'Smith Machine Lunge', group: 'اتزان' },
+      { ar: 'ريفيرس هايبر ماشين', en: 'Reverse Hyper Machine', group: 'اتزان' },
+    ];
+
+    // بحث في قاعدة البيانات
+    function searchExercises(query) {
+      if (!query || query.length < 1) return [];
+      const q = query.toLowerCase().trim();
+      return EXERCISES_DB.filter(ex =>
+        ex.ar.includes(q) || ex.en.toLowerCase().includes(q) || ex.group.includes(q)
+      ).slice(0, 8);
+    }
+
+    // اختيار تمرين من الـ dropdown
+    function selectExercise(di, ei, ar, en) {
+      S.days[di].exercises[ei].ar = ar;
+      S.days[di].exercises[ei].en = en;
+      // إغلاق الـ dropdown
+      const dd = document.getElementById(`dd_${di}_${ei}`);
+      if (dd) dd.style.display = 'none';
+      // تحديث الـ inputs مباشرة بدون re-render كامل
+      const arInput = document.getElementById(`ar_${di}_${ei}`);
+      const enInput = document.getElementById(`en_${di}_${ei}`);
+      if (arInput) arInput.value = ar;
+      if (enInput) enInput.value = en;
+    }
+
+    function onArInput(di, ei, val) {
+      S.days[di].exercises[ei].ar = val;
+      const results = searchExercises(val);
+      const dd = document.getElementById(`dd_${di}_${ei}`);
+      if (!dd) return;
+      if (results.length > 0 && val.length > 0) {
+        dd.innerHTML = results.map(ex =>
+          `<div class="dd-item" onclick="selectExercise(${di},${ei},'${ex.ar.replace(/'/g,"\\'")}','${ex.en.replace(/'/g,"\\'")}')">
+            <span class="dd-ar">${ex.ar}</span>
+            <span class="dd-en">${ex.en}</span>
+            <span class="dd-group">${ex.group}</span>
+          </div>`
+        ).join('');
+        dd.style.display = 'block';
+      } else {
+        dd.style.display = 'none';
+      }
+    }
+
+    function closeAllDropdowns() {
+      document.querySelectorAll('.ex-dropdown').forEach(d => d.style.display = 'none');
+    }
+    document.addEventListener('click', function(ev) {
+      if (!ev.target.closest('.ex-search-wrap')) closeAllDropdowns();
+    });
     function handlePhoto(inp) { const f = inp.files[0]; if (!f) return; const r = new FileReader(); r.onload = ev => { coachPhoto = ev.target.result; R() }; r.readAsDataURL(f); }
     function TT(m) { const t = document.getElementById('toast'); t.textContent = m; t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 3000); }
     function totalEx() { let c = 0; S.days.forEach(d => c += d.exercises.length); return c; }
+
+    // ===== placeholder =====
+    function _REMOVED() {
+      const planData = {
+        coach: { name: S.co.name, phone: S.co.phone, wa: S.co.wa },
+        client: S.cl.name || 'اللاعب',
+        days: S.days.map(d => ({
+          name: d.name, title: d.title, sub: d.sub,
+          exercises: d.exercises.filter(ex => ex.ar || ex.en).map(ex => ({
+            ar: ex.ar, en: ex.en, sets: parseInt(ex.sets) || 4, reps: ex.reps, rest: ex.rest, yt: ex.yt
+          }))
+        }))
+      };
+
+      const trackerHTML = `<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="theme-color" content="#0a0a0a">
+<title>سجل تمارينك | ${(S.cl.name || 'اللاعب').replace(/</g,'')}</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{font-family:'Cairo',sans-serif;background:#0a0a0a;color:#fff;min-height:100vh;padding-bottom:90px}
+.hd{padding:20px 16px 12px;text-align:center;border-bottom:1px solid rgba(212,175,55,.2)}
+.hd h1{font-size:20px;font-weight:900}.hd h1 b{color:#d4af37}
+.hd .cn{font-size:12px;color:#a0a0a0;margin-top:2px}
+.dtabs{display:flex;gap:6px;padding:12px;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.dtab{flex-shrink:0;padding:8px 16px;border-radius:20px;background:#111;border:1px solid rgba(212,175,55,.2);color:#888;font-family:'Cairo';font-weight:700;font-size:13px;cursor:pointer;white-space:nowrap}
+.dtab.a{background:#d4af37;color:#fff;box-shadow:0 0 12px rgba(212,175,55,.4)}
+.wrap{padding:0 12px}
+.dh{margin:8px 4px 14px}.dh .t{font-size:18px;font-weight:900;color:#d4af37}.dh .s{font-size:12px;color:#888}
+.exc{background:#111;border:1px solid rgba(212,175,55,.15);border-radius:14px;padding:14px;margin-bottom:14px}
+.exh{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;gap:8px}
+.exn{flex:1}.exn .ar{font-size:16px;font-weight:800}.exn .en{font-size:11px;color:#d4af37;direction:ltr;text-align:right}
+.ext{font-size:10px;background:rgba(212,175,55,.1);color:#d4af37;padding:3px 8px;border-radius:6px;white-space:nowrap}
+.yt{display:inline-block;margin-bottom:10px;font-size:11px;color:#ff4d4d;text-decoration:none;font-weight:700}
+.sets{display:flex;flex-direction:column;gap:6px}
+.srow{display:grid;grid-template-columns:44px 1fr 1fr 36px;gap:6px;align-items:center}
+.sn{font-size:11px;font-weight:800;color:#888;text-align:center}
+.si{width:100%;padding:9px 6px;background:#0a0a0a;border:1px solid rgba(212,175,55,.2);border-radius:8px;color:#fff;font-family:'Cairo';font-size:15px;font-weight:700;text-align:center;outline:none;direction:ltr}
+.si:focus{border-color:#d4af37}
+.si.done{border-color:#2ecc71;background:rgba(46,204,113,.05)}
+.chk{width:32px;height:32px;border-radius:8px;border:1px solid rgba(212,175,55,.3);background:transparent;color:#555;font-size:14px;cursor:pointer}
+.chk.on{background:#2ecc71;border-color:#2ecc71;color:#fff}
+.shd{display:grid;grid-template-columns:44px 1fr 1fr 36px;gap:6px;margin-bottom:4px}
+.shd span{font-size:10px;color:#666;text-align:center;font-weight:700}
+.prev{font-size:10px;color:#666;margin-top:6px;text-align:center}
+.prev b{color:#d4af37}
+.bar{position:fixed;bottom:0;right:0;left:0;background:rgba(10,10,10,.95);border-top:1px solid rgba(212,175,55,.3);padding:10px 12px;display:flex;gap:8px;backdrop-filter:blur(10px)}
+.bb{flex:1;padding:12px;border:none;border-radius:10px;font-family:'Cairo';font-weight:800;font-size:14px;cursor:pointer}
+.bb.save{background:#d4af37;color:#fff}
+.bb.send{background:#25D366;color:#fff}
+.toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(100px);background:#111;color:#d4af37;padding:10px 22px;border-radius:8px;font-size:13px;font-weight:700;border:1px solid #d4af37;transition:transform .3s;z-index:99}
+.toast.show{transform:translateX(-50%) translateY(0)}
+.done-badge{font-size:11px;color:#2ecc71;font-weight:800}
+</style>
+</head>
+<body>
+<div class="hd"><h1>سجل <b>تمارينك</b> 💪</h1><div class="cn" id="cn"></div></div>
+<div class="dtabs" id="dtabs"></div>
+<div class="wrap" id="content"></div>
+<div class="bar">
+  <button class="bb save" onclick="saveAll()">💾 حفظ</button>
+  <button class="bb send" onclick="sendToCoach()">📤 ابعت للكابتن</button>
+</div>
+<div class="toast" id="toast"></div>
+<script>
+const PLAN = ${JSON.stringify(planData)};
+let curDay = 0;
+const todayKey = () => new Date().toISOString().slice(0,10);
+const storeKey = di => 'wk_' + di;
+
+function loadLog(di){ try{ return JSON.parse(localStorage.getItem(storeKey(di))) || {} }catch(e){ return {} } }
+function saveLog(di, log){ localStorage.setItem(storeKey(di), JSON.stringify(log)); }
+
+function toast(m){ const t=document.getElementById('toast'); t.textContent=m; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2200); }
+
+function render(){
+  document.getElementById('cn').textContent = PLAN.client + ' | الكابتن: ' + PLAN.coach.name;
+  document.getElementById('dtabs').innerHTML = PLAN.days.map((d,i)=>
+    \`<button class="dtab \${i===curDay?'a':''}" onclick="curDay=\${i};render()">\${d.name}</button>\`).join('');
+  const d = PLAN.days[curDay];
+  const log = loadLog(curDay);
+  const hist = log.history || [];
+  const last = hist.length ? hist[hist.length-1] : null;
+  document.getElementById('content').innerHTML = \`
+    <div class="dh"><div class="t">\${d.title || d.name}</div><div class="s">\${d.sub || ''}</div></div>
+    \${d.exercises.map((ex,ei)=>{
+      const cur = (log.current && log.current[ei]) || [];
+      const prevEx = last ? (last.data[ei]||[]) : [];
+      const prevTxt = prevEx.filter(s=>s&&(s.w||s.r)).map((s,i)=>\`S\${i+1}: \${s.w||'-'}kg×\${s.r||'-'}\`).join(' · ');
+      return \`<div class="exc">
+        <div class="exh"><div class="exn"><div class="ar">\${ex.ar}</div><div class="en">\${ex.en}</div></div>
+        <span class="ext">\${ex.sets} × \${ex.reps}</span></div>
+        \${ex.yt?\`<a class="yt" href="\${ex.yt}" target="_blank">▶️ شاهد الفيديو</a>\`:''}
+        <div class="shd"><span>Set</span><span>الوزن kg</span><span>التكرارات</span><span>✓</span></div>
+        <div class="sets">
+        \${Array.from({length:ex.sets}).map((_,si)=>{
+          const s = cur[si]||{};
+          return \`<div class="srow">
+            <span class="sn">\${si+1}</span>
+            <input class="si \${s.done?'done':''}" type="number" inputmode="decimal" placeholder="0" value="\${s.w||''}" onchange="upd(\${ei},\${si},'w',this.value)">
+            <input class="si \${s.done?'done':''}" type="number" inputmode="numeric" placeholder="0" value="\${s.r||''}" onchange="upd(\${ei},\${si},'r',this.value)">
+            <button class="chk \${s.done?'on':''}" onclick="tgl(\${ei},\${si})">✓</button>
+          </div>\`;
+        }).join('')}
+        </div>
+        \${prevTxt?\`<div class="prev">📊 آخر مرة: <b>\${prevTxt}</b></div>\`:''}
+      </div>\`;
+    }).join('')}\`;
+}
+
+function upd(ei,si,k,v){
+  const log = loadLog(curDay);
+  log.current = log.current || {};
+  log.current[ei] = log.current[ei] || [];
+  log.current[ei][si] = log.current[ei][si] || {};
+  log.current[ei][si][k] = v;
+  saveLog(curDay, log);
+}
+function tgl(ei,si){
+  const log = loadLog(curDay);
+  log.current = log.current || {};
+  log.current[ei] = log.current[ei] || [];
+  log.current[ei][si] = log.current[ei][si] || {};
+  log.current[ei][si].done = !log.current[ei][si].done;
+  saveLog(curDay, log);
+  render();
+}
+function saveAll(){
+  const log = loadLog(curDay);
+  if(!log.current || !Object.keys(log.current).length){ toast('⚠️ سجل أوزانك الأول'); return; }
+  log.history = log.history || [];
+  log.history.push({ date: todayKey(), data: JSON.parse(JSON.stringify(log.current)) });
+  if(log.history.length > 30) log.history.shift();
+  log.current = {};
+  saveLog(curDay, log);
+  toast('✅ تم حفظ الجلسة!');
+  render();
+}
+function sendToCoach(){
+  const d = PLAN.days[curDay];
+  const log = loadLog(curDay);
+  const src = (log.current && Object.keys(log.current).length) ? log.current : (log.history && log.history.length ? log.history[log.history.length-1].data : null);
+  if(!src){ toast('⚠️ مفيش بيانات مسجلة'); return; }
+  let msg = '💪 *تسجيل تمارين - ' + PLAN.client + '*\\n📅 ' + todayKey() + '\\n🏋️ ' + (d.title||d.name) + '\\n\\n';
+  d.exercises.forEach((ex,ei)=>{
+    const sets = src[ei];
+    if(!sets) return;
+    const lines = sets.filter(s=>s&&(s.w||s.r)).map((s,i)=>'  S'+(i+1)+': '+(s.w||'-')+'kg × '+(s.r||'-'));
+    if(lines.length) msg += '▪️ ' + ex.ar + '\\n' + lines.join('\\n') + '\\n';
+  });
+  let wa = PLAN.coach.wa.replace(/[^0-9]/g,'');
+  if(wa && !wa.startsWith('2') && wa.length===11) wa = '2'+wa;
+  window.open('https://wa.me/'+wa+'?text='+encodeURIComponent(msg),'_blank');
+}
+render();
+<\/script>
+</body>
+</html>`;
+
+      const blob = new Blob([trackerHTML], { type: 'text/html' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'تسجيل_التمارين_' + (S.cl.name || 'اللاعب').replace(/\s+/g, '_') + '.html';
+      a.click();
+      URL.revokeObjectURL(a.href);
+      TT('✅ اتحمل ملف صفحة اللاعب — ابعته واتساب!');
+    }
+
+    function updateStats() {
+      const ds = document.getElementById('stat-days');
+      const ex = document.getElementById('stat-ex');
+      if (ds) { ds.textContent = S.days.length; ds.classList.add('bump'); setTimeout(() => ds.classList.remove('bump'), 400); }
+      if (ex) { ex.textContent = totalEx(); ex.classList.add('bump'); setTimeout(() => ex.classList.remove('bump'), 400); }
+    }
+
+    function addExercise(di) {
+      const newEx = {ar:'', en:'', sets:'4', reps:'10-15', rest:'60 ثانية', yt:''};
+      S.days[di].exercises.push(newEx);
+      const ei = S.days[di].exercises.length - 1;
+      // inject new card before the add button
+      const addBtn = document.querySelector(`#day-card-${di} .add-btn`);
+      if (!addBtn) { R(); return; }
+      const div = document.createElement('div');
+      div.className = 'ex-card';
+      div.id = `ex-card-${di}-${ei}`;
+      div.innerHTML = `
+        <span class="ex-num">${String(ei + 1).padStart(2,'0')}</span>
+        <button class="ex-rm" onclick="S.days[${di}].exercises.splice(${ei},1);R()" title="حذف التمرين">✕</button>
+        <div class="ex-fields">
+          <div class="g2">
+            <div class="fd">
+              <label>اسم التمرين (عربي)</label>
+              <div class="ex-search-wrap">
+                <input id="ar_${di}_${ei}" value=""
+                  oninput="S.days[${di}].exercises[${ei}].ar=this.value;onArInput(${di},${ei},this.value)"
+                  onfocus="onArInput(${di},${ei},this.value)"
+                  placeholder="ابحث أو اكتب اسم التمرين..."
+                  autocomplete="off">
+                <div class="ex-dropdown" id="dd_${di}_${ei}"></div>
+              </div>
+              <div class="search-hint">🔍 ابدأ الكتابة لاختيار تمرين من المكتبة</div>
+            </div>
+            <div class="fd"><label>الاسم (إنجليزي)</label><input id="en_${di}_${ei}" value="" oninput="S.days[${di}].exercises[${ei}].en=this.value" dir="ltr" placeholder="يتضاف تلقائياً عند الاختيار"></div>
+          </div>
+          <div class="g3">
+            <div class="fd"><label>المجموعات (Sets)</label><input value="4" oninput="S.days[${di}].exercises[${ei}].sets=this.value" placeholder="4"></div>
+            <div class="fd"><label>التكرارات (Reps)</label><input value="10-15" oninput="S.days[${di}].exercises[${ei}].reps=this.value" placeholder="10-15"></div>
+            <div class="fd"><label>الراحة (Rest)</label><input value="60 ثانية" oninput="S.days[${di}].exercises[${ei}].rest=this.value" placeholder="60 ثانية"></div>
+          </div>
+          <div class="ex-link">
+            <span class="yt-icon">▶️</span>
+            <div class="fd" style="margin:0;flex:1"><input type="url" value="" oninput="S.days[${di}].exercises[${ei}].yt=this.value" placeholder="رابط فيديو الشرح (YouTube)" dir="ltr"></div>
+          </div>
+        </div>`;
+      addBtn.parentNode.insertBefore(div, addBtn);
+      updateStats();
+      // focus on Arabic input
+      setTimeout(() => { const inp = document.getElementById(`ar_${di}_${ei}`); if(inp) inp.focus(); }, 50);
+    }
+
+    function addDay() {
+      const di = S.days.length;
+      S.days.push({name:'اليوم '+(di+1), title:'', sub:'', exercises:[{ar:'',en:'',sets:'4',reps:'10-15',rest:'60 ثانية',yt:''}]});
+      // inject before add-day button
+      const addDayBtn = document.querySelector('.add-day');
+      if (!addDayBtn) { R(); return; }
+      const div = document.createElement('div');
+      div.className = 'day-card';
+      div.id = `day-card-${di}`;
+      div.innerHTML = `
+        <div class="day-header">
+          <div class="day-badge">اليوم ${di+1}</div>
+          <div class="day-title-input"><div class="fd" style="margin:0"><input value="" oninput="S.days[${di}].title=this.value" placeholder="عنوان اليوم (مثال: تمارين الدفع)" style="font-weight:800;color:#fff;"></div></div>
+          <button class="day-rm" onclick="if(confirm('هل أنت متأكد من حذف هذا اليوم؟')){S.days.splice(${di},1);R()}" title="حذف اليوم">✕</button>
+        </div>
+        <div class="day-sub"><div class="fd" style="margin:0"><input value="" oninput="S.days[${di}].sub=this.value" placeholder="العضلات المستهدفة (مثال: الصدر · الأكتاف)" style="font-size:12px;color:var(--text-muted)"></div></div>
+        <div class="ex-card" id="ex-card-${di}-0">
+          <span class="ex-num">01</span>
+          <button class="ex-rm" onclick="S.days[${di}].exercises.splice(0,1);R()" title="حذف التمرين">✕</button>
+          <div class="ex-fields">
+            <div class="g2">
+              <div class="fd">
+                <label>اسم التمرين (عربي)</label>
+                <div class="ex-search-wrap">
+                  <input id="ar_${di}_0" value=""
+                    oninput="S.days[${di}].exercises[0].ar=this.value;onArInput(${di},0,this.value)"
+                    onfocus="onArInput(${di},0,this.value)"
+                    placeholder="ابحث أو اكتب اسم التمرين..."
+                    autocomplete="off">
+                  <div class="ex-dropdown" id="dd_${di}_0"></div>
+                </div>
+                <div class="search-hint">🔍 ابدأ الكتابة لاختيار تمرين من المكتبة</div>
+              </div>
+              <div class="fd"><label>الاسم (إنجليزي)</label><input id="en_${di}_0" value="" oninput="S.days[${di}].exercises[0].en=this.value" dir="ltr" placeholder="يتضاف تلقائياً عند الاختيار"></div>
+            </div>
+            <div class="g3">
+              <div class="fd"><label>المجموعات (Sets)</label><input value="4" oninput="S.days[${di}].exercises[0].sets=this.value" placeholder="4"></div>
+              <div class="fd"><label>التكرارات (Reps)</label><input value="10-15" oninput="S.days[${di}].exercises[0].reps=this.value" placeholder="10-15"></div>
+              <div class="fd"><label>الراحة (Rest)</label><input value="60 ثانية" oninput="S.days[${di}].exercises[0].rest=this.value" placeholder="60 ثانية"></div>
+            </div>
+            <div class="ex-link">
+              <span class="yt-icon">▶️</span>
+              <div class="fd" style="margin:0;flex:1"><input type="url" value="" oninput="S.days[${di}].exercises[0].yt=this.value" placeholder="رابط فيديو الشرح (YouTube)" dir="ltr"></div>
+            </div>
+          </div>
+        </div>
+        <button class="add-btn" onclick="addExercise(${di})">+ إضافة تمرين جديد</button>`;
+      addDayBtn.parentNode.insertBefore(div, addDayBtn);
+      updateStats();
+      div.scrollIntoView({behavior:'smooth', block:'start'});
+      setTimeout(() => { const inp = document.getElementById(`ar_${di}_0`); if(inp) inp.focus(); }, 300);
+    }
 
     function R() {
       document.getElementById('app').innerHTML = `
@@ -1160,11 +1694,11 @@
       // Days tab
       return `<div class="st"><span class="si">📋</span><h2>جدول التمارين</h2></div>
     <div class="stats">
-      <div class="stat-box"><span class="sv">${S.days.length}</span><span class="sl">أيام تدريب</span></div>
-      <div class="stat-box"><span class="sv">${totalEx()}</span><span class="sl">إجمالي التمارين</span></div>
+      <div class="stat-box"><span class="sv" id="stat-days">${S.days.length}</span><span class="sl">أيام تدريب</span></div>
+      <div class="stat-box"><span class="sv" id="stat-ex">${totalEx()}</span><span class="sl">إجمالي التمارين</span></div>
     </div>
     ${S.days.map((d, di) => `
-    <div class="day-card">
+    <div class="day-card" id="day-card-${di}">
       <div class="day-header">
         <div class="day-badge">${e(d.name)}</div>
         <div class="day-title-input"><div class="fd" style="margin:0"><input value="${e(d.title)}" oninput="S.days[${di}].title=this.value" placeholder="عنوان اليوم (مثال: تمارين الدفع)" style="font-weight:800;color:#fff;"></div></div>
@@ -1173,13 +1707,24 @@
       <div class="day-sub"><div class="fd" style="margin:0"><input value="${e(d.sub)}" oninput="S.days[${di}].sub=this.value" placeholder="العضلات المستهدفة (مثال: الصدر · الأكتاف)" style="font-size:12px;color:var(--text-muted)"></div></div>
 
       ${d.exercises.map((ex, ei) => `
-      <div class="ex-card">
+      <div class="ex-card" id="ex-card-${di}-${ei}">
         <span class="ex-num">${String(ei + 1).padStart(2, '0')}</span>
         <button class="ex-rm" onclick="S.days[${di}].exercises.splice(${ei}, 1);R()" title="حذف التمرين">✕</button>
         <div class="ex-fields">
           <div class="g2">
-            <div class="fd"><label>اسم التمرين (عربي)</label><input value="${e(ex.ar)}" oninput="S.days[${di}].exercises[${ei}].ar=this.value" placeholder="مثال: رفرفة كابل"></div>
-            <div class="fd"><label>الاسم (إنجليزي)</label><input value="${e(ex.en)}" oninput="S.days[${di}].exercises[${ei}].en=this.value" dir="ltr" placeholder="Cable Fly"></div>
+            <div class="fd">
+              <label>اسم التمرين (عربي)</label>
+              <div class="ex-search-wrap">
+                <input id="ar_${di}_${ei}" value="${e(ex.ar)}"
+                  oninput="S.days[${di}].exercises[${ei}].ar=this.value;onArInput(${di},${ei},this.value)"
+                  onfocus="onArInput(${di},${ei},this.value)"
+                  placeholder="ابحث أو اكتب اسم التمرين..."
+                  autocomplete="off">
+                <div class="ex-dropdown" id="dd_${di}_${ei}"></div>
+              </div>
+              <div class="search-hint">🔍 ابدأ الكتابة لاختيار تمرين من المكتبة</div>
+            </div>
+            <div class="fd"><label>الاسم (إنجليزي)</label><input id="en_${di}_${ei}" value="${e(ex.en)}" oninput="S.days[${di}].exercises[${ei}].en=this.value" dir="ltr" placeholder="يتضاف تلقائياً عند الاختيار"></div>
           </div>
           <div class="g3">
             <div class="fd"><label>المجموعات (Sets)</label><input value="${e(ex.sets)}" oninput="S.days[${di}].exercises[${ei}].sets=this.value" placeholder="4"></div>
@@ -1193,10 +1738,10 @@
         </div>
       </div>`).join('')}
 
-      <button class="add-btn" onclick="S.days[${di}].exercises.push({ar:'',en:'',sets:'4',reps:'10-15',rest:'60 ثانية',yt:''});R()">+ إضافة تمرين جديد</button>
+      <button class="add-btn" onclick="addExercise(${di})">+ إضافة تمرين جديد</button>
     </div>`).join('')}
 
-    <button class="add-day" onclick="S.days.push({name:'اليوم '+(S.days.length+1),title:'',sub:'',exercises:[{ar:'',en:'',sets:'4',reps:'10-15',rest:'60 ثانية',yt:''}]});R()">+ إضافة يوم تدريب جديد</button>`;
+    <button class="add-day" onclick="addDay()">+ إضافة يوم تدريب جديد</button>`;
     }
 
     function bg() {
