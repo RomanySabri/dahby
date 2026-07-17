@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 
 <head>
@@ -23,7 +23,8 @@
 
     body {
       font-family: 'Cairo', sans-serif;
-      background: #0a0a0a;
+      background: radial-gradient(circle at center, #1b2532 0%, #0d1219 100%);
+      background-attachment: fixed;
       min-height: 100vh;
       color: #ffffff;
       overflow-x: hidden;
@@ -34,7 +35,7 @@
     }
 
     ::-webkit-scrollbar-thumb {
-      background: #d4af37;
+      background: #e5a93b;
       border-radius: 4px
     }
 
@@ -54,14 +55,14 @@
     .hdr-l .ic {
       width: 40px;
       height: 40px;
-      background: #d4af37;
-      color: #ffffff;
+      background: #131c26;
+      color: #e5a93b;
+      border: 1px solid #e5a93b;
       border-radius: 8px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 20px;
-      box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+      box-shadow: 0 0 12px rgba(229, 169, 59, 0.25);
     }
 
     .hdr-l h1 {
@@ -72,12 +73,12 @@
     }
 
     .hdr-l h1 b {
-      color: #d4af37
+      color: #e5a93b
     }
 
     .hdr-l .sub {
       font-size: 11px;
-      color: #a0a0a0;
+      color: #8fa0b5;
       letter-spacing: 2px;
       text-transform: uppercase
     }
@@ -102,24 +103,25 @@
     }
 
     .bt-r {
-      background: transparent;
-      color: #d4af37;
-      border: 1px solid #d4af37
+      background: #131c26;
+      color: #e5a93b;
+      border: 1px solid #e5a93b;
     }
 
     .bt-r:hover {
-      box-shadow: 0 0 12px rgba(212, 175, 55, 0.3);
-      background: rgba(212, 175, 55, 0.1);
+      box-shadow: 0 0 12px rgba(229, 169, 59, 0.3);
+      background: rgba(229, 169, 59, 0.1);
     }
 
     .bt-g {
-      background: #d4af37;
-      color: #ffffff;
-      box-shadow: 0 0 12px rgba(212, 175, 55, 0.4)
+      background: linear-gradient(135deg, #ffd054 0%, #d49f3f 100%);
+      color: #0d1219;
+      box-shadow: 0 0 12px rgba(212, 159, 63, 0.4)
     }
 
     .bt-g:hover {
-      box-shadow: 0 0 18px rgba(212, 175, 55, 0.6)
+      box-shadow: 0 0 18px rgba(212, 159, 63, 0.6);
+      filter: brightness(1.05);
     }
 
     .bt-g:active {
@@ -141,8 +143,8 @@
       gap: 3px;
       padding: 3px;
       border-radius: 12px;
-      background: #111111;
-      border: 1px solid rgba(212, 175, 55, 0.15)
+      background: #131c26;
+      border: 1px solid rgba(229, 169, 59, 0.15)
     }
 
     .tb {
@@ -150,7 +152,7 @@
       border: none;
       cursor: pointer;
       background: transparent;
-      color: #808080;
+      color: #8fa0b5;
       padding: 8px 2px 6px;
       border-radius: 8px;
       font-family: 'Cairo';
@@ -164,13 +166,21 @@
     }
 
     .tb .ti {
-      font-size: 20px
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #e5a93b;
     }
 
     .tb.a {
-      background: #d4af37;
+      background: #1c446c;
       color: #ffffff;
-      box-shadow: 0 0 12px rgba(212, 175, 55, 0.5)
+      border-top: 3px solid #38bdf8;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 4px 12px rgba(28, 68, 108, 0.4);
+    }
+
+    .tb.a .ti {
+      color: #ffffff
     }
 
     .ca {
@@ -178,9 +188,9 @@
     }
 
     .cc {
-      background: #111111;
-      border: 1px solid rgba(212, 175, 55, 0.2);
-      box-shadow: 0 0 20px rgba(212, 175, 55, 0.05);
+      background: #141d27;
+      border: 1px solid #1f2c3d;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
       border-radius: 12px;
       padding: 20px 16px;
       min-height: 50vh
@@ -192,7 +202,7 @@
       gap: 8px;
       margin-bottom: 16px;
       padding-bottom: 8px;
-      border-bottom: 1px solid rgba(212, 175, 55, 0.2)
+      border-bottom: 1px solid #1f2c3d
     }
 
     .st h2 {
@@ -203,8 +213,10 @@
     }
 
     .st .si {
-      font-size: 22px;
-      color: #d4af37
+      color: #e5a93b;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .fd {
@@ -216,7 +228,7 @@
       display: block;
       font-size: 14px;
       font-weight: 700;
-      color: #d4af37;
+      color: #e5a93b;
       margin-bottom: 4px
     }
 
@@ -225,15 +237,19 @@
     .fd textarea {
       width: 100%;
       padding: 10px 12px;
-      border: 1px solid rgba(212, 175, 55, 0.2);
+      border: 1px solid #1f2c3d;
       border-radius: 8px;
-      background: #0a0a0a;
+      background: #0b0e14;
       font-family: 'Cairo';
       font-size: 16px;
       color: #ffffff;
       outline: none;
       direction: rtl;
       transition: all 0.3s
+    }
+
+    .fd input::placeholder {
+      color: #5c6e84;
     }
 
     .fd input[type="date"],
@@ -245,8 +261,8 @@
     .fd input:focus,
     .fd textarea:focus,
     .fd select:focus {
-      border-color: #d4af37;
-      box-shadow: 0 0 12px rgba(212, 175, 55, 0.2)
+      border-color: #e5a93b;
+      box-shadow: 0 0 10px rgba(229, 169, 59, 0.25)
     }
 
     .fd textarea {
@@ -255,7 +271,7 @@
     }
 
     .fd select option {
-      background: #111111
+      background: #141d27
     }
 
     .g2 {
@@ -306,9 +322,9 @@
     }
 
     .mp-p {
-      background: rgba(212, 175, 55, 0.08);
-      border-color: #d4af37;
-      color: #d4af37
+      background: rgba(229, 169, 59, 0.08);
+      border-color: #e5a93b;
+      color: #e5a93b
     }
 
     .mp-k {
@@ -318,7 +334,7 @@
     }
 
     .mp-f {
-      background: rgba(200, 200, 200, 0.08);
+      background: rgba(255, 255, 255, 0.08);
       border-color: #ffffff;
       color: #ffffff
     }
@@ -327,8 +343,8 @@
       margin-top: 14px;
       padding: 12px;
       border-radius: 8px;
-      background: #0a0a0a;
-      border: 1px solid rgba(212, 175, 55, 0.2);
+      background: #0b0e14;
+      border: 1px solid #1f2c3d;
       display: flex;
       justify-content: space-around;
       text-align: center;
@@ -338,7 +354,7 @@
     .dt .di {
       font-size: 13px;
       font-weight: 800;
-      color: #a0a0a0;
+      color: #8fa0b5;
       text-transform: none
     }
 
@@ -354,7 +370,7 @@
     }
 
     .di-p .dv {
-      color: #d4af37
+      color: #e5a93b
     }
 
     .di-k .dv {
@@ -368,8 +384,8 @@
     .mc {
       padding: 14px;
       margin-bottom: 12px;
-      background: #0a0a0a;
-      border: 1px solid rgba(212, 175, 55, 0.2);
+      background: #0c1015;
+      border: 1px solid #1f2c3d;
       border-radius: 8px;
       position: relative
     }
@@ -397,8 +413,8 @@
       right: 10px;
       width: 24px;
       height: 24px;
-      background: #d4af37;
-      color: #ffffff;
+      background: #e5a93b;
+      color: #0c1015;
       border-radius: 4px;
       display: flex;
       align-items: center;
@@ -410,10 +426,10 @@
     .ba {
       width: 100%;
       padding: 14px;
-      border: 1px dashed rgba(212, 175, 55, 0.4);
+      border: 1px dashed rgba(229, 169, 59, 0.4);
       border-radius: 8px;
       background: transparent;
-      color: #d4af37;
+      color: #e5a93b;
       font-family: 'Cairo';
       font-size: 14px;
       font-weight: 700;
@@ -422,16 +438,16 @@
     }
 
     .ba:hover {
-      border-color: #d4af37;
-      box-shadow: 0 0 12px rgba(212, 175, 55, 0.2)
+      border-color: #e5a93b;
+      box-shadow: 0 0 12px rgba(229, 169, 59, 0.2)
     }
 
     .rs {
       padding: 16px;
       border-radius: 8px;
       margin-bottom: 12px;
-      background: #0a0a0a;
-      border: 1px solid rgba(212, 175, 55, 0.2)
+      background: #0c1015;
+      border: 1px solid #1f2c3d
     }
 
     .phu {
@@ -446,15 +462,15 @@
       width: 100px;
       height: 100px;
       border-radius: 50%;
-      border: 2px solid #d4af37;
+      border: 2px solid #e5a93b;
       overflow: hidden;
-      background: #0a0a0a;
+      background: #0c1015;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
       position: relative;
-      box-shadow: 0 0 15px rgba(212, 175, 55, 0.2)
+      box-shadow: 0 0 15px rgba(229, 169, 59, 0.2)
     }
 
     .phc img {
@@ -476,7 +492,7 @@
 
     .phl {
       font-size: 13px;
-      color: #d4af37;
+      color: #e5a93b;
       font-weight: 600
     }
 
@@ -485,14 +501,14 @@
       bottom: 30px;
       left: 50%;
       transform: translateX(-50%) translateY(80px);
-      background: #111111;
-      color: #d4af37;
+      background: #131c26;
+      color: #e5a93b;
       padding: 12px 24px;
       border-radius: 8px;
       font-size: 14px;
       font-weight: 700;
-      border: 1px solid #d4af37;
-      box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+      border: 1px solid #e5a93b;
+      box-shadow: 0 0 15px rgba(229, 169, 59, 0.4);
       z-index: 1000;
       transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)
     }
@@ -510,7 +526,7 @@
     .sp {
       width: 12px;
       height: 12px;
-      border: 2px solid #0a0a0a;
+      border: 2px solid #0c1015;
       border-top-color: transparent;
       border-radius: 50%;
       animation: spin 0.6s linear infinite;
@@ -570,28 +586,28 @@
       overflow: hidden;
       font-family: 'Cairo', sans-serif;
       direction: rtl;
-      background: #0a0a0a;
+      background: #0d1219;
       color: #ffffff
     }
 
     .pp-bg {
       position: absolute;
       inset: 0;
-      background: #0a0a0a
+      background: #0d1219
     }
 
     .pp-pat {
       position: absolute;
       inset: 0;
       opacity: 0.04;
-      background-image: linear-gradient(#d4af37 1px, transparent 1px), linear-gradient(90deg, #d4af37 1px, transparent 1px);
+      background-image: linear-gradient(#e5a93b 1px, transparent 1px), linear-gradient(90deg, #e5a93b 1px, transparent 1px);
       background-size: 40px 40px
     }
 
     .pp-bdr {
       position: absolute;
       inset: 20px;
-      border: 1px solid rgba(212, 175, 55, 0.4);
+      border: 1px solid rgba(229, 169, 59, 0.3);
       border-radius: 8px;
       pointer-events: none;
       z-index: 2;
@@ -614,15 +630,15 @@
       padding: 12px 0;
       text-align: center;
       font-size: 12px;
-      color: #a0a0a0;
+      color: #8fa0b5;
       width: 100%;
-      border-top: 1px solid rgba(212, 175, 55, 0.2)
+      border-top: 1px solid rgba(229, 169, 59, 0.15)
     }
 
     /* Cover specific overrides */
     .pp-badge {
-      background: #d4af37;
-      color: #ffffff;
+      background: #e5a93b;
+      color: #0c1015;
       padding: 8px 24px;
       border-radius: 4px;
       font-size: 14px;
@@ -631,14 +647,14 @@
       margin-bottom: 12px;
       z-index: 2;
       position: relative;
-      box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
-      border: 1px solid #d4af37;
+      box-shadow: 0 0 15px rgba(229, 169, 59, 0.35);
+      border: 1px solid #e5a93b;
     }
 
     .pp-cname {
       font-size: 36px;
       font-weight: 900;
-      color: #d4af37;
+      color: #e5a93b;
       text-align: center;
       text-transform: uppercase;
       text-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
@@ -654,8 +670,8 @@
     }
 
     .pp-ccard {
-      background: rgba(10, 10, 10, 0.85);
-      border: 1px solid rgba(212, 175, 55, 0.4);
+      background: rgba(20, 29, 39, 0.95);
+      border: 1px solid rgba(229, 169, 59, 0.3);
       border-radius: 8px;
       padding: 24px 30px;
       width: 85%;
@@ -665,7 +681,7 @@
 
     .pp-ctitle {
       text-align: center;
-      color: #d4af37;
+      color: #e5a93b;
       font-size: 18px;
       font-weight: 900;
       margin-bottom: 16px;
@@ -688,7 +704,7 @@
 
     .pp-cil {
       font-size: 13px;
-      color: #d4af37;
+      color: #e5a93b;
       font-weight: 800;
       margin-bottom: 4px;
       text-transform: uppercase
@@ -709,7 +725,7 @@
 
     .pp-cwt .cwl {
       font-size: 14px;
-      color: #a0a0a0;
+      color: #8fa0b5;
       text-transform: uppercase;
       margin-bottom: 6px
     }
@@ -719,12 +735,12 @@
       font-weight: 900;
       color: #ffffff;
       font-family: 'Cairo';
-      text-shadow: 0 4px 15px rgba(212, 175, 55, 0.3)
+      text-shadow: 0 4px 15px rgba(229, 169, 59, 0.2)
     }
 
     .pp-cwt .cwu {
       font-size: 18px;
-      color: #d4af37;
+      color: #e5a93b;
       font-weight: 800
     }
 
@@ -741,7 +757,7 @@
       border-radius: 8px;
       text-align: center;
       border: 1px solid;
-      background: rgba(10, 10, 10, 0.85);
+      background: rgba(20, 29, 39, 0.95);
     }
 
     .pp-mb .pv2 {
@@ -766,9 +782,9 @@
     }
 
     .mb-p {
-      border-color: #d4af37;
-      color: #d4af37;
-      box-shadow: 0 0 15px rgba(212, 175, 55, 0.15)
+      border-color: #e5a93b;
+      color: #e5a93b;
+      box-shadow: 0 0 15px rgba(229, 169, 59, 0.15)
     }
 
     .mb-k {
@@ -794,7 +810,7 @@
     .pp-ph h2 {
       font-size: 30px;
       font-weight: 900;
-      color: #d4af37
+      color: #e5a93b
     }
 
     .pp-ph .phs {
@@ -809,16 +825,16 @@
     .pp-ph .phl2 {
       width: 60px;
       height: 3px;
-      background: #d4af37;
+      background: #e5a93b;
       margin: 12px auto 0;
       border-radius: 2px;
-      box-shadow: 0 0 8px rgba(212, 175, 55, 0.5)
+      box-shadow: 0 0 8px rgba(229, 169, 59, 0.4)
     }
 
     .pp-meal {
-      background: #111111;
-      border: 1px solid rgba(212, 175, 55, 0.2);
-      border-right: 4px solid #d4af37;
+      background: #141d27;
+      border: 1px solid #1f2c3d;
+      border-right: 4px solid #e5a93b;
       border-radius: 8px;
       padding: 12px 16px;
       margin-bottom: 10px;
@@ -827,7 +843,7 @@
     }
 
     .pp-meal .mn {
-      color: #d4af37;
+      color: #e5a93b;
       font-size: 18px;
       font-weight: 800;
       margin-bottom: 4px
@@ -837,8 +853,8 @@
       position: absolute;
       top: 12px;
       left: 16px;
-      background: #d4af37;
-      color: #ffffff;
+      background: #e5a93b;
+      color: #0c1015;
       width: 22px;
       height: 22px;
       border-radius: 4px;
@@ -858,7 +874,7 @@
     }
 
     .pp-meal .mad {
-      color: #a0a0a0;
+      color: #8fa0b5;
       font-size: 12px;
       text-align: center;
       margin: 8px 0 4px;
@@ -867,7 +883,7 @@
     }
 
     .pp-meal .ma {
-      color: #808080;
+      color: #8fa0b5;
       font-size: 14px;
       line-height: 1.6
     }
@@ -887,7 +903,8 @@
       font-size: 11px;
       font-weight: 800;
       border: 1px solid;
-      background: #0a0a0a;
+      background: #0b0e14;
+      border-color: #1f2c3d;
       text-transform: none
     }
 
@@ -900,8 +917,8 @@
     }
 
     .pp-sec {
-      background: #111111;
-      border: 1px solid rgba(212, 175, 55, 0.2);
+      background: #141d27;
+      border: 1px solid #1f2c3d;
       border-radius: 8px;
       padding: 12px 16px;
       margin-bottom: 10px;
@@ -909,7 +926,7 @@
     }
 
     .pp-sec.sf {
-      border-right: 4px solid #d4af37
+      border-right: 4px solid #e5a93b
     }
 
     .pp-sec.sd {
@@ -935,7 +952,7 @@
     }
 
     .sf .stt {
-      color: #d4af37
+      color: #e5a93b
     }
 
     .sd .stt {
@@ -969,7 +986,7 @@
     }
 
     .pp-text h3 {
-      color: #d4af37;
+      color: #e5a93b;
       font-size: 22px;
       font-weight: 800;
       margin: 20px 0 12px;
@@ -986,11 +1003,11 @@
 
     .pp-text .qa {
       margin-bottom: 16px;
-      background: #111111;
+      background: #141d27;
       padding: 16px;
       border-radius: 8px;
-      border: 1px solid rgba(212, 175, 55, 0.2);
-      border-right: 4px solid #d4af37
+      border: 1px solid #1f2c3d;
+      border-right: 4px solid #e5a93b
     }
 
     .pp-text .qq {
@@ -1039,6 +1056,16 @@
       }
     };
 
+    const ICONS = {
+      coach: `<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M18 2H6a2 2 0 0 0-2 2v3c0 2.25 1.5 4.14 3.5 4.75A6 6 0 0 0 11 17.93V20H9a1 1 0 0 0 0 2h6a1 1 0 0 0 0-2h-2v-2.07a6 6 0 0 0 3.5-6.18A4.75 4.75 0 0 0 20 7V4a2 2 0 0 0-2-2zM6 9V4h2v5a2 2 0 0 1-4 0zm12 0a2 2 0 0 1-4 0V4h2v5z"/></svg>`,
+      client: `<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>`,
+      intro: `<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M18 2H6a3 3 0 0 0-3 3v14a3 3 0 0 0 3 3h12a3 3 0 0 0 3-3V5a3 3 0 0 0-3-3zm-1 16H7a1 1 0 0 1 0-2h10a1 1 0 0 1 0 2zm0-4H7a1 1 0 0 1 0-2h10a1 1 0 0 1 0 2zm0-4H7a1 1 0 0 1 0-2h10a1 1 0 0 1 0 2z"/></svg>`,
+      meals: `<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M11 9H9V2H7v7H5V2H3v7c0 2.12 1.66 3.84 3.75 3.97V22h2.5v-9.03C11.34 12.84 13 11.12 13 9V2h-2v7zm5-3v8h2.5v8h2V2c-2.5 0-4.5 2-4.5 4z"/></svg>`,
+      vitamins: `<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" style="transform: rotate(45deg); display: inline-block;"><path d="M6 3h12a3 3 0 0 1 3 3v12a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3V6a3 3 0 0 1 3-3zm0 2a1 1 0 0 0-1 1v6h14V6a1 1 0 0 0-1-1H6zm14 9H4v4a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-4z"/></svg>`,
+      rules: `<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M19 3h-4.18C14.4 1.84 13.3 1 12 1c-1.3 0-2.4.84-2.82 2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 0c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm2 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>`,
+      faq: `<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 16h-2v-2h2v2zm1.07-7.75l-.9.92C12.45 11.9 12 12.5 12 14h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H7c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.04-.42 1.99-1.07 2.25z"/></svg>`
+    };
+
     const e = s => (s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
     const L = s => (s || '').split('\n').filter(Boolean);
     const n = v => parseFloat(v) || 0;
@@ -1048,11 +1075,11 @@
 
     function R() {
       document.getElementById('app').innerHTML = `
-  <div class="hdr"><div class="hdr-l"><div class="ic">🍽️</div><div><h1>Nutri<b>Plan</b></h1><div class="sub">Dashboard</div></div></div>
-  <div class="hdr-a"><button class="bt bt-r" onclick="if(confirm('مسح البيانات؟')){S.cl={name:'',age:'',height:'',weight:'',goal:'تخسيس',sd:'',ed:''};R()}">🔄</button>
-  <button class="bt bt-g ${S.gen ? 'ld' : ''}" onclick="GEN()">${S.gen ? '<span class="sp"></span> جاري...' : '📄 PDF'}</button></div></div>
+  <div class="hdr"><div class="hdr-l"><div class="ic">${ICONS.meals}</div><div><h1>Nutri<b>Plan</b></h1><div class="sub">Dashboard</div></div></div>
+  <div class="hdr-a"><button class="bt bt-r" onclick="if(confirm('مسح البيانات؟')){S.cl={name:'',age:'',height:'',weight:'',goal:'تخسيس',sd:'',ed:''};R()}"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M17.65 6.35A7.958 7.958 0 0 0 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg></button>
+  <button class="bt bt-g ${S.gen ? 'ld' : ''}" onclick="GEN()">${S.gen ? '<span class="sp"></span> جاري...' : '<svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" style="vertical-align:middle;margin-left:4px;"><path d="M20 2H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-8.5 7.5c0 .83-.67 1.5-1.5 1.5H9v2H7.5V7H10c.83 0 1.5.67 1.5 1.5v1zm5 2c0 .83-.67 1.5-1.5 1.5h-2.5V7H15c.83 0 1.5.67 1.5 1.5v3zm4-3H19v1h1.5V10H19v3h-1.5V7h3v1.5zM9 9.5h1v-1H9v1zm5.5 2h1v-3h-1v3zM4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6z"/></svg> PDF'}</button></div></div>
   <div class="tbar"><div class="tbar-in">
-  ${[['coach', '🏋️', 'الكابتن'], ['client', '👤', 'العميل'], ['intro', '📖', 'المقدمة'], ['meals', '🍽️', 'الوجبات'], ['vitamins', '💊', 'المكملات'], ['rules', '📋', 'التعليمات'], ['faq', '❓', 'أسئلة']].map(([id, ic, lb]) => `<button class="tb ${S.tab === id ? 'a' : ''}" onclick="S.tab='${id}';R()"><span class="ti">${ic}</span>${lb}</button>`).join('')}
+  ${[['coach', 'الكابتن'], ['client', 'العميل'], ['intro', 'المقدمة'], ['meals', 'الوجبات'], ['vitamins', 'المكملات'], ['rules', 'التعليمات'], ['faq', 'أسئلة']].map(([id, lb]) => `<button class="tb ${S.tab === id ? 'a' : ''}" onclick="S.tab='${id}';R()"><span class="ti">${ICONS[id]}</span>${lb}</button>`).join('')}
   </div></div>
   <div class="ca"><div class="cc"><div class="tc">${TAB()}</div></div></div>
   <div class="toast" id="toast"></div>`;
@@ -1060,7 +1087,7 @@
 
     function TAB() {
       const c = S.cl, np = S.np, o = S.co;
-      if (S.tab === 'client') return `<div class="st"><span class="si">👤</span><h2>بيانات العميل</h2></div>
+      if (S.tab === 'client') return `<div class="st"><span class="si">${ICONS.client}</span><h2>بيانات العميل</h2></div>
     <div class="g2"><div class="cs2 fd"><label>الاسم</label><input value="${e(c.name)}" oninput="S.cl.name=this.value" placeholder="اسم العميل"></div>
     <div class="fd"><label>العمر</label><input type="number" value="${e(c.age)}" oninput="S.cl.age=this.value"></div>
     <div class="fd"><label>الطول (سم)</label><input type="number" value="${e(c.height)}" oninput="S.cl.height=this.value"></div>
@@ -1070,7 +1097,7 @@
     <div class="fd"><label>تاريخ الانتهاء</label><input type="date" value="${e(c.ed)}" oninput="S.cl.ed=this.value"></div></div>`;
 
       if (S.tab === 'meals') {
-        const t = tot(); return `<div class="st"><span class="si">🍽️</span><h2>الوجبات</h2></div>
+        const t = tot(); return `<div class="st"><span class="si">${ICONS.meals}</span><h2>الوجبات</h2></div>
     ${np.meals.map((m, i) => `<div class="mc"><span class="mc-n">${i + 1}</span><button class="mc-rm" onclick="S.np.meals.splice(${i},1);R()">✕</button>
     <div style="padding-top:6px"><div class="fd"><label>اسم الوجبة</label><input value="${e(m.name)}" oninput="S.np.meals[${i}].name=this.value"></div>
     <div class="fd"><label>المحتوى</label><textarea rows="3" oninput="S.np.meals[${i}].items=this.value">${e(m.items)}</textarea></div>
@@ -1080,22 +1107,22 @@
     <div class="fd"><label>🍞كارب</label><input type="number" value="${e(m.carb)}" oninput="S.np.meals[${i}].carb=this.value"></div>
     <div class="fd"><label>🫒دهون</label><input type="number" value="${e(m.fat)}" oninput="S.np.meals[${i}].fat=this.value"></div>
     <div class="fd"><label>🔥سعرات</label><input type="number" value="${e(m.cal)}" oninput="S.np.meals[${i}].cal=this.value"></div></div>
-    ${(n(m.cal) || n(m.pro)) ? `<div class="macro-row"><div class="mp mp-p"><span class="mv">${n(m.pro)}g</span>بروتين</div><div class="mp mp-k"><span class="mv">${n(m.carb)}g</span>كارب</div><div class="mp mp-f"><span class="mv">${n(m.fat)}g</span>دهون</div><div class="mp mp-c"><span class="mv">${n(m.cal)}</span>سعرات</div></div>` : ''}
+    ${(n(m.cal) || n(m.pro)) ? `<div class="macro-row"><div class="mp mp-p"><span class="mv">${n(m.pro)}g</span>بروتين</div><div class="mp mp-k"><span class="mv">${n(m.carb)}g</span>كارب</div><div class="mp mp-f"><span class="mv">${n(m.fat) || 0}g</span>دهون</div><div class="mp mp-c"><span class="mv">${n(m.cal) || 0}</span>سعرات</div></div>` : ''}
     </div></div>`).join('')}
     <button class="ba" onclick="S.np.meals.push({name:'',items:'',alt:'',cal:'',pro:'',carb:'',fat:''});R()">+ إضافة وجبة</button>
     ${(t.cal) ? `<div class="dt"><div class="di di-p"><span class="dv">${t.pro}g</span>بروتين</div><div class="di di-k"><span class="dv">${t.carb}g</span>كارب</div><div class="di di-f"><span class="dv">${t.fat}g</span>دهون</div><div class="di di-c"><span class="dv">${t.cal}</span>سعرات</div></div>` : ''}`;
       }
 
-      if (S.tab === 'rules') return `<div class="st"><span class="si">📋</span><h2>التعليمات</h2></div>
+      if (S.tab === 'rules') return `<div class="st"><span class="si">${ICONS.rules}</span><h2>التعليمات</h2></div>
     <div class="rs rs-f"><div class="fd"><label>🚫 الممنوع</label><textarea rows="5" oninput="S.np.forbidden=this.value">${e(np.forbidden)}</textarea></div></div>
     <div class="rs rs-d"><div class="fd"><label>⚠️ التقليل</label><textarea rows="2" oninput="S.np.reduce=this.value">${e(np.reduce)}</textarea></div></div>
     <div class="rs rs-o"><div class="fd"><label>✅ الاهتمام</label><textarea rows="3" oninput="S.np.focus=this.value">${e(np.focus)}</textarea></div></div>`;
 
-      if (S.tab === 'vitamins') return `<div class="st"><span class="si">💊</span><h2>الفيتامينات والمكملات</h2></div>
+      if (S.tab === 'vitamins') return `<div class="st"><span class="si">${ICONS.vitamins}</span><h2>الفيتامينات والمكملات</h2></div>
     <div class="fd"><label>الفيتامينات</label><textarea rows="6" oninput="S.np.vitamins=this.value">${e(np.vitamins)}</textarea></div>
     <div class="fd"><label>المكملات</label><textarea rows="3" oninput="S.np.supps=this.value">${e(np.supps)}</textarea></div>`;
 
-      if (S.tab === 'coach') return `<div class="st"><span class="si">🏋️</span><h2>بيانات الكابتن</h2></div>
+      if (S.tab === 'coach') return `<div class="st"><span class="si">${ICONS.coach}</span><h2>بيانات الكابتن</h2></div>
     <div class="phu"><div class="phc">${coachPhoto ? `<img src="${coachPhoto}">` : '<span class="php">📷</span>'}<input type="file" accept="image/*" onchange="handlePhoto(this)"></div><span class="phl">اضغط لاختيار الصورة</span></div>
     <div class="fd"><label>الاسم</label><input value="${e(o.name)}" oninput="S.co.name=this.value"></div>
     <div class="fd"><label>الهاتف</label><input value="${e(o.phone)}" oninput="S.co.phone=this.value" dir="ltr" style="text-align:left"></div>
@@ -1103,11 +1130,11 @@
     <div class="fd"><label>الوصف</label><input value="${e(o.cert)}" oninput="S.co.cert=this.value"></div>
     <div class="fd"><label>الشهادات والخبرات</label><textarea rows="5" oninput="S.co.certs=this.value">${e(o.certs)}</textarea></div>`;
 
-      if (S.tab === 'intro') return `<div class="st"><span class="si">📖</span><h2>المقدمة ومعلومات التغذية</h2></div>
+      if (S.tab === 'intro') return `<div class="st"><span class="si">${ICONS.intro}</span><h2>المقدمة ومعلومات التغذية</h2></div>
     <div class="fd"><label>مقدمة عامة عن النظام</label><textarea rows="6" oninput="S.co.intro=this.value">${e(o.intro)}</textarea></div>
     <div class="fd"><label>معلومات عن التغذية</label><textarea rows="8" oninput="S.co.nutritionInfo=this.value">${e(o.nutritionInfo)}</textarea></div>`;
 
-      if (S.tab === 'faq') return `<div class="st"><span class="si">❓</span><h2>أسئلة شائعة عن الدايت</h2></div>
+      if (S.tab === 'faq') return `<div class="st"><span class="si">${ICONS.faq}</span><h2>أسئلة شائعة عن الدايت</h2></div>
     <div class="fd"><label>الأسئلة والإجابات (افصل كل سؤال+إجابة بسطر ---)</label><textarea rows="14" oninput="S.co.faq=this.value">${e(o.faq)}</textarea></div>`;
     }
 
@@ -1115,7 +1142,7 @@
       if (coachPhoto) {
         return `<div class="pp-bg"></div>
                 <div style="position:absolute;inset:0;background:url('${coachPhoto}') center center/cover no-repeat;opacity:0.25;filter:grayscale(100%);"></div>
-                <div style="position:absolute;inset:0;background:linear-gradient(to bottom, rgba(10,10,10,0.4), #0a0a0a);opacity:0.6;"></div>
+                <div style="position:absolute;inset:0;background:linear-gradient(to bottom, rgba(13,18,25,0.4), #0d1219);opacity:0.6;"></div>
                 <div class="pp-bdr"></div>`;
       }
       return '<div class="pp-bg"></div><div class="pp-pat"></div><div class="pp-bdr"></div>';
@@ -1123,7 +1150,7 @@
     function ft(o) {
       const phIc = `<svg style="vertical-align:middle;margin-left:4px" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M6.62 10.79c1.44 2.82 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>`;
       const waIc = `<svg style="vertical-align:middle;margin-left:4px" width="14" height="14" viewBox="0 0 24 24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>`;
-      const cPic = coachPhoto ? `<img src="${coachPhoto}" style="width:30px;height:30px;border-radius:50%;object-fit:cover;vertical-align:middle;margin-left:10px;border:1px solid #d4af37;box-shadow:0 0 5px rgba(212,175,55,0.3)">` : '';
+      const cPic = coachPhoto ? `<img src="${coachPhoto}" style="width:30px;height:30px;border-radius:50%;object-fit:cover;vertical-align:middle;margin-left:10px;border:1px solid #e5a93b;box-shadow:0 0 5px rgba(229,169,59,0.3)">` : '';
       return `<div class="pp-ft" style="display:flex;align-items:center;justify-content:center;gap:5px;">${cPic} <span>${e(o.name)} | ${phIc} ${e(o.phone)} | ${waIc} ${e(o.wa)}</span></div>`;
     }
 
@@ -1135,8 +1162,8 @@
 
         const coverBg = coachPhoto
           ? `<div style="position:absolute;inset:0;background:url('${coachPhoto}') center top/cover no-repeat;"></div>
-               <div style="position:absolute;inset:0;background:linear-gradient(to bottom, transparent 0%, rgba(10,10,10,0) 50%, rgba(10,10,10,0.6) 75%, #0a0a0a 100%);"></div>`
-          : `<div style="position:absolute;inset:0;background:#0a0a0a;"></div>`;
+               <div style="position:absolute;inset:0;background:linear-gradient(to bottom, transparent 0%, rgba(13,18,25,0) 50%, rgba(13,18,25,0.6) 75%, #0d1219 100%);"></div>`
+          : `<div style="position:absolute;inset:0;background:#0d1219;"></div>`;
 
         // Parse FAQ
         const faqItems = (o.faq || '').split('---').map(block => {
@@ -1189,13 +1216,13 @@
         <div style="flex-grow: 1;"></div>
         <div class="pp-cname" style="flex-shrink:0;">${e(o.name)}</div>
         <div class="pp-csub" style="direction:ltr; display:flex; align-items:center; justify-content:center;flex-shrink:0;">
-          ${e(o.cert)} <span style="margin:0 10px;color:#d4af37">|</span>
+          ${e(o.cert)} <span style="margin:0 10px;color:#e5a93b">|</span>
           <svg style="margin-right:4px" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M6.62 10.79c1.44 2.82 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg> ${e(o.phone)}
-          <span style="margin:0 10px;color:#d4af37">|</span>
+          <span style="margin:0 10px;color:#e5a93b">|</span>
           <svg style="margin-right:4px" width="16" height="16" viewBox="0 0 24 24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg> ${e(o.wa)}
         </div>
         <!-- Certificates on Cover -->
-        <div style="width:85%;margin-top:15px;background:rgba(10,10,10,0.85);border:1px solid rgba(212,175,55,0.4);border-radius:12px;padding:12px 20px;flex-shrink:0;">
+        <div style="width:85%;margin-top:15px;background:rgba(20,29,39,0.95);border:1px solid rgba(229,169,59,0.3);border-radius:12px;padding:12px 20px;flex-shrink:0;">
           <div class="pp-ctitle" style="margin-bottom:8px;font-size:14px;text-shadow:none">الشهادات والخبرات</div>
           ${L(o.certs).map(c => `<div class="cert-d" style="color:#ffffff;font-size:12px;line-height:1.6;margin-bottom:4px;font-weight:600">• ${e(c)}</div>`).join('')}
         </div>
@@ -1207,7 +1234,7 @@
             <div class="pp-citem" style="padding:4px 0"><span class="pp-cil">العمر</span><span class="pp-civ">${c.age ? c.age + ' سنة' : '—'}</span></div>
             <div class="pp-citem" style="padding:4px 0"><span class="pp-cil">الطول</span><span class="pp-civ">${c.height ? c.height + ' سم' : '—'}</span></div>
             <div class="pp-citem" style="padding:4px 0"><span class="pp-cil">الوزن</span><span class="pp-civ">${c.weight || '—'} كجم</span></div>
-            <div class="pp-citem" style="grid-column: span 2; padding:4px 0; border-top:1px solid rgba(212,175,55,0.1); margin-top:4px;"><span class="pp-cil">الهدف</span><span class="pp-civ">${e(c.goal)}</span></div>
+            <div class="pp-citem" style="grid-column: span 2; padding:4px 0; border-top:1px solid rgba(229,169,59,0.15); margin-top:4px;"><span class="pp-cil">الهدف</span><span class="pp-civ">${e(c.goal)}</span></div>
           </div>
         </div>
         ${hm ? `<div class="pp-mbar" style="margin-top:12px;flex-shrink:0;">
@@ -1264,7 +1291,7 @@
         for (let i = 0; i < pagesIds.length; i++) {
           const el = document.getElementById(pagesIds[i]);
           if (!el) continue;
-          const canvas = await html2canvas(el, { scale: 2, useCORS: true, backgroundColor: '#0a0a0a', logging: false, width: 794, height: 1123, windowWidth: 794 });
+          const canvas = await html2canvas(el, { scale: 2, useCORS: true, backgroundColor: '#0d1219', logging: false, width: 794, height: 1123, windowWidth: 794 });
           const img = canvas.toDataURL('image/jpeg', 0.93);
           if (i > 0) pdf.addPage();
           pdf.addImage(img, 'JPEG', 0, 0, 210, 297);
