@@ -212,8 +212,7 @@
     .st h2 {
       font-size: 17px;
       font-weight: 700;
-      color: #ffffff;
-      letter-spacing: 1px
+      color: #ffffff
     }
 
     .st .si {
@@ -763,7 +762,6 @@
       font-weight: 800;
       color: #d63031;
       text-transform: uppercase;
-      letter-spacing: 1px;
     }
 
     /* Inner page headers in Red/White theme */
@@ -933,7 +931,7 @@
 
     .meal-line-en {
       font-family: 'Montserrat', sans-serif;
-      font-size: 15.5px;
+      font-size: 18px;
       font-weight: 700;
       color: #ffffff;
       text-align: center;
@@ -944,7 +942,7 @@
 
     .meal-line-ar {
       font-family: 'Cairo', sans-serif;
-      font-size: 16.5px;
+      font-size: 20px;
       font-weight: 800;
       color: #ffffff;
       text-align: center;
@@ -954,7 +952,7 @@
 
     .meal-line-note {
       font-family: 'Montserrat', 'Cairo', sans-serif;
-      font-size: 12px;
+      font-size: 14px;
       font-weight: 700;
       font-style: italic;
       color: #d63031;
@@ -1241,7 +1239,9 @@
       return L(text).map(line => {
         const trimmed = line.trim();
         if (/^\*.*\*$/.test(trimmed)) {
-          return `<div class="meal-line-note">${e(trimmed.replace(/\*/g, ''))}</div>`;
+          const content = trimmed.replace(/\*/g, '');
+          const isAr = /[\u0600-\u06FF]/.test(content);
+          return `<div class="meal-line-note" ${isAr ? 'style="letter-spacing:normal;"' : ''}>${e(content)}</div>`;
         } else if (/[\u0600-\u06FF]/.test(trimmed)) {
           return `<div class="meal-line-ar">${e(trimmed)}</div>`;
         } else {
@@ -1446,7 +1446,7 @@
             </div>
           </div>
           <div class="meal-footer-right">
-            <div class="meal-quote">“${e(o.quote || 'NO GUTS, NO GLORY.')}”</div>
+            <div class="meal-quote" style="${/[\u0600-\u06FF]/.test(o.quote) ? 'letter-spacing: normal;' : ''}">“${e(o.quote || 'NO GUTS, NO GLORY.')}”</div>
           </div>
         </div>
 
